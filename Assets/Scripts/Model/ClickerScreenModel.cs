@@ -2,7 +2,7 @@ using System;
 using System.Timers;
 using Unity.VisualScripting;
 
-public class ClickerModel
+public class ClickerScreenModel
 {
     public event Action CountChanged;
     public event Action EnergyCountChanged;

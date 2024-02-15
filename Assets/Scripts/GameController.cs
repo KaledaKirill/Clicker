@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private ClickerModel _clickerModel;
-    private ClickerView _clickerView;
-    private ClickerPresenter _clickerPresenter;
+    private ClickerScreenModel _clickerModel;
+    private ClickerScreenView _clickerView;
+    private ClickerScreenPresenter _clickerPresenter;
 
     void Start()
     {
-        _clickerModel = new ClickerModel();
+        _clickerModel = new ClickerScreenModel();
 
-        var prefab = Resources.Load<ClickerView>(nameof(ClickerView));
-        _clickerView = Object.Instantiate<ClickerView>(prefab, Vector3.zero, Quaternion.identity);
+        var prefab = Resources.Load<ClickerScreenView>(nameof(ClickerScreenView));
+        _clickerView = Object.Instantiate<ClickerScreenView>(prefab, Vector3.zero, Quaternion.identity);
 
-        _clickerPresenter = new ClickerPresenter(_clickerView, _clickerModel, _clickerView.CoinView);
+        _clickerPresenter = new ClickerScreenPresenter(_clickerView, _clickerModel);
     }
 }
