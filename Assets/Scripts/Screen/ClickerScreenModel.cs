@@ -12,13 +12,14 @@ public class ClickerScreenModel
 
 
     private int _coinsCount;
-    private int _coinsPerClick = 10;
+    private int _coinsPerClick = 1;
     private int _minCoinsCount = 0;
     private int _maxEnergy = 100;
     private int _energyCount;
     private int _rechargeTime = 10;
     private int _currentTime;
     private static System.Timers.Timer _timer;
+    private BoostService _boostService;
 
     public void SetCoinsCount(int count)
     { 

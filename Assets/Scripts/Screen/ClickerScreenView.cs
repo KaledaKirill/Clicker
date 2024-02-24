@@ -10,24 +10,28 @@ public class ClickerScreenView : MonoBehaviour
 {
     public event Action EnergyButtonClick;
     public event Action CoinClicked;
+    public event Action StoreButtonClick;
 
     [SerializeField] private Slider energySlider;
     [SerializeField] private Button energyButton;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI energyCountText;
     [SerializeField] private Button coinButton;
+    [SerializeField] private Button storeButton;
 
 
     private void SetupEventListeners(Action ButtonCLick)
     {
         energyButton.onClick.AddListener(OnEnergyButtonCLick);
         coinButton.onClick.AddListener(OnCoinClick);
+        storeButton.onClick.AddListener(OnStoreButtonClick);
     }
 
     private void RemoveEventListeners() 
     {
         energyButton.onClick.RemoveAllListeners();
         coinButton.onClick.RemoveAllListeners();
+        storeButton.onClick.RemoveAllListeners();
     }
 
 
@@ -39,8 +43,13 @@ public class ClickerScreenView : MonoBehaviour
     private void OnEnergyButtonCLick() =>
         EnergyButtonClick?.Invoke();
 
-    public void OnCoinClick() =>
+    private void OnCoinClick() =>
         CoinClicked?.Invoke();
+
+    private void OnStoreButtonClick()
+    {
+        StoreButtonClick?.Invoke();
+    }
 
     public void SetScoreText(string text) =>
         scoreText.text = text;
