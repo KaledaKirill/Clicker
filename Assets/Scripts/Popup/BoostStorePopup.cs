@@ -6,7 +6,7 @@ using Zenject;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class BoostStorePopup : MonoBehaviour, IPopup
+public class BoostStorePopup : MonoBehaviour
 {
     [SerializeField] private Button buyButton;
     [SerializeField] private Button hideButton;
