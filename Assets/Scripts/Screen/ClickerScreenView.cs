@@ -24,7 +24,7 @@ public class ClickerScreenView : MonoBehaviour
     {
         energyButton.onClick.AddListener(OnEnergyButtonCLick);
         coinButton.onClick.AddListener(OnCoinClick);
-        storeButton.onClick.AddListener(OnStoreButtonClick);
+        storeButton.onClick.AddListener(OnstoreButtonClick);
     }
 
     private void RemoveEventListeners() 
@@ -40,16 +40,16 @@ public class ClickerScreenView : MonoBehaviour
         SetupEventListeners(EnergyButtonClick);
     }
 
+    private void OnstoreButtonClick()
+    {
+        StoreButtonClick?.Invoke();
+    }
+
     private void OnEnergyButtonCLick() =>
         EnergyButtonClick?.Invoke();
 
     private void OnCoinClick() =>
         CoinClicked?.Invoke();
-
-    private void OnStoreButtonClick()
-    {
-        StoreButtonClick?.Invoke();
-    }
 
     public void SetScoreText(string text) =>
         scoreText.text = text;

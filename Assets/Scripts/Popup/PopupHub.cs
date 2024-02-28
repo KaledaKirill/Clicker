@@ -1,23 +1,19 @@
+using System;
 using UnityEngine;
+using Zenject;
 
-public class PopupHub 
+public class PopupHub
 {
-    private ClickerScreenView _clickerScreenView;
+    [Inject] readonly BoostStorePopup.Factory _boostStorePopupFactory;
 
-    public PopupHub(ClickerScreenView clickerScreenView)
-    {
-        _clickerScreenView = clickerScreenView;
-        SetupHandlers();
-    }
+    public class Factory : PlaceholderFactory<PopupHub> { }
 
-    private void SetupHandlers()
+    public void CreateBoostStorePopup()
     {
-        _clickerScreenView.StoreButtonClick += CreateBoostStorePopup;
-    }
-
-    private void CreateBoostStorePopup()
-    {
-        Creator creator = new BoostStorePopupCreator();
-        IPopup boostStorePopup = creator.FactoryMethod(Vector3.zero);
+        //Creator creator = new BoostStorePopupCreator();
+        //var prefab = Resources.Load<BoostStorePopup>(nameof(BoostStorePopup));
+        //_diContainer.InstantiatePrefab(prefab, Vector3.zero, Quaternion.identity, null);
+        //IPopup boostStorePopup = creator.FactoryMethod(Vector3.zero);
+        _boostStorePopupFactory.Create();
     }
 }

@@ -7,11 +7,13 @@ public class ClickerScreenPresenter : IPresenter
 {
     ClickerScreenView _clickerScreenView;
     ClickerScreenModel _clickerScreenModel;
+    PopupHub _popupHub;
 
-    public ClickerScreenPresenter(ClickerScreenView ClickerScreenView, ClickerScreenModel clickerModel)
+    public ClickerScreenPresenter(ClickerScreenView clickerScreenView, ClickerScreenModel clickerModel, PopupHub popupHub)
     {
         _clickerScreenModel = clickerModel;
-        _clickerScreenView = ClickerScreenView;
+        _clickerScreenView = clickerScreenView;
+        _popupHub = popupHub;
         Enable();
 
         _clickerScreenView.SetEnergySliderMaxValue(_clickerScreenModel.GetMaxEnergyCount());
@@ -24,12 +26,13 @@ public class ClickerScreenPresenter : IPresenter
     public void Enable()
     {
         _clickerScreenModel.CountChanged += OnViewChanged;
-        _clickerScreenView.CoinClicked += UpdateEnergyCount;
         _clickerScreenView.CoinClicked += UpdateCoinsCount;
+        _clickerScreenView.CoinClicked += UpdateEnergyCount;
         _clickerScreenModel.EnergyCountChanged += OnViewChanged;
         _clickerScreenModel.EnergyEnd += OnEnergyEnd;
         _clickerScreenModel.TimeIsOver += EnableRestartEnergyButton;
         _clickerScreenView.EnergyButtonClick += RestartEnergy;
+        _clickerScreenView.StoreButtonClick += CreateBoostStorePopup;
     }
     public void Disable()
     {
@@ -41,6 +44,7 @@ public class ClickerScreenPresenter : IPresenter
         _clickerScreenModel.EnergyEnd -= OnEnergyEnd;
         _clickerScreenModel.TimeIsOver -= EnableRestartEnergyButton;
         _clickerScreenView.EnergyButtonClick -= RestartEnergy;
+        _clickerScreenView.StoreButtonClick -= CreateBoostStorePopup;
     }
 
     private void UpdateCoinsCount() =>
@@ -74,6 +78,11 @@ public class ClickerScreenPresenter : IPresenter
         _clickerScreenModel.RestartEnergy();
         _clickerScreenModel.SetCurrentTime(_clickerScreenModel.GetRechargeTime());
         DisableRestartEnergyButton();
+    }
+
+    private void CreateBoostStorePopup()
+    {
+        _popupHub.CreateBoostStorePopup();
     }
 
     private void DisableRestartEnergyButton()

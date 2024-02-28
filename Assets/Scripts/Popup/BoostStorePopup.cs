@@ -2,15 +2,26 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class BoostStorePopup : MonoBehaviour, IPopup
 {
-    public event Action BuyButtonClicked;
-
     [SerializeField] private Button buyButton;
     [SerializeField] private Button hideButton;
     [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI costText;
     private BoostService _boostService;
+
+    [Inject]
+    public void Construct(BoostService boostService)
+    {
+        _boostService = boostService;
+        SetDescription(_boostService.GetCoinsPerClick, _boostService.GetCoinsPerClickCost);
+    }
+
+    public class Factory : PlaceholderFactory<BoostStorePopup> { }
 
     private void SetUpListeners()
     {
@@ -35,8 +46,15 @@ public class BoostStorePopup : MonoBehaviour, IPopup
         Destroy(gameObject);
     }
 
+    public void SetDescription(int boostValue, int costValue)
+    {
+        descriptionText.text = boostValue + " coins per click";
+        costText.text = costValue + "$";
+    }
+
     private void OnBuyButtonClicked()
     {
-        BuyButtonClicked?.Invoke();
+        _boostService.BoostCoinsPerClick();
+        SetDescription(_boostService.GetCoinsPerClick, _boostService.GetCoinsPerClickCost);
     }
 }

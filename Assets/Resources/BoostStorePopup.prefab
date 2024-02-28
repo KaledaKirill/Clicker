@@ -260,6 +260,7 @@ MonoBehaviour:
   buyButton: {fileID: 7785610044239511626}
   hideButton: {fileID: 2533538634159052030}
   descriptionText: {fileID: 619529605500195144}
+  costText: {fileID: 1131156067113359673}
 --- !u!1 &1762938348438867705
 GameObject:
   m_ObjectHideFlags: 0
