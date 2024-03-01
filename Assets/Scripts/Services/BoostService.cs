@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class BoostService
-{ 
+{
     public event Action<int> CoinsPerClickChanged;
     public event Action<int> BalanceChanged;
     public event Action<int> CostChanged;
@@ -12,6 +13,7 @@ public class BoostService
     private int _coinsPerClickCost = 50;
     private int _balance = 0;
     private float _cost_multiplier = 1.5f;
+    [Inject] private BoostType _boostType;
 
     public int GetCoinsPerClickCost => _coinsPerClickCost;
 

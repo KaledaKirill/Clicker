@@ -8,36 +8,48 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class BoostStorePopup : MonoBehaviour
 {
-    [SerializeField] private Button buyButton;
+    [Header("Buttons")]
     [SerializeField] private Button hideButton;
-    [SerializeField] private TextMeshProUGUI descriptionText;
-    [SerializeField] private TextMeshProUGUI costText;
-    private BoostService _boostService;
+    [SerializeField] private Button coinsPerClickBuyButton;
+    [SerializeField] private Button EnergyBuyButton;
+    [SerializeField] private Button RechargeTimeBuyButton;
 
+    [Header("Description text")]
+    [SerializeField] private TextMeshProUGUI coinsPerClickDescriptionText;
+    [SerializeField] private TextMeshProUGUI EnergyDescriptionText;
+    [SerializeField] private TextMeshProUGUI RechargeTimeDescriptionText;
+
+    [Header("Cost text")]
+    [SerializeField] private TextMeshProUGUI coinsPerClickCostText;
+    [SerializeField] private TextMeshProUGUI EnergyCostText;
+    [SerializeField] private TextMeshProUGUI RechargeTimeCostText;
+
+    private BoostService _boostService;
+    private BoostType _boostType;
+    
     [Inject]
-    public void Construct(BoostService boostService)
+    public void Construct(BoostService boostService, BoostType boostType)
     {
         _boostService = boostService;
+        _boostType = boostType;
         SetDescription(_boostService.GetCoinsPerClick, _boostService.GetCoinsPerClickCost);
-    }
-
-    public class Factory : PlaceholderFactory<BoostStorePopup> { }
-
-    private void SetUpListeners()
-    {
-        hideButton.onClick.AddListener(HidePopup);
-        buyButton.onClick.AddListener(OnBuyButtonClicked);
-    }
-
-    private void RemoveListeners()
-    {
-        hideButton.onClick.RemoveAllListeners();
-        buyButton.onClick.RemoveAllListeners();
     }
 
     private void Awake()
     {
         SetUpListeners();
+    }
+
+    private void SetUpListeners()
+    {
+        hideButton.onClick.AddListener(HidePopup);
+        coinsPerClickBuyButton.onClick.AddListener(OnBuyButtonClicked);
+    }
+
+    private void RemoveListeners()
+    {
+        hideButton.onClick.RemoveAllListeners();
+        coinsPerClickBuyButton.onClick.RemoveAllListeners();
     }
 
     public void HidePopup()
@@ -48,8 +60,8 @@ public class BoostStorePopup : MonoBehaviour
 
     public void SetDescription(int boostValue, int costValue)
     {
-        descriptionText.text = boostValue + " coins per click";
-        costText.text = costValue + "$";
+        coinsPerClickDescriptionText.text = boostValue + " coins per click";
+        coinsPerClickCostText.text = costValue + "$";
     }
 
     private void OnBuyButtonClicked()
@@ -57,4 +69,6 @@ public class BoostStorePopup : MonoBehaviour
         _boostService.BoostCoinsPerClick();
         SetDescription(_boostService.GetCoinsPerClick, _boostService.GetCoinsPerClickCost);
     }
+
+    public class Factory : PlaceholderFactory<BoostStorePopup> { }
 }
