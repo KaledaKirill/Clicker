@@ -1,9 +1,6 @@
 using System;
 using System.Timers;
-using Unity.VisualScripting;
-using UnityEngine;
 using Zenject;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class ClickerScreenModel
 {
@@ -12,6 +9,7 @@ public class ClickerScreenModel
     public event Action EnergyEnd;
     public event Action TimeChanged;
     public event Action TimeIsOver;
+    public event Action MaxEnergyChanged;
 
 
     private int _coinsCount;
@@ -27,10 +25,11 @@ public class ClickerScreenModel
     public ClickerScreenModel(BoostService boostService)
     {
         _boostService = boostService;
-        _boostService.CoinsPerClickChanged += SetCoinsPerClick;
         _boostService.BalanceChanged += SetCoinsCount;
+        _boostService.CoinsPerClickChanged += SetCoinsPerClick;
+        _boostService.EnergyChanged += SetMaxEnergy;
+        _boostService.RechargeTimeChanged += SetRechargeTime;
     }
-
 
     public class Factory : PlaceholderFactory<ClickerScreenModel> { }
 
@@ -55,7 +54,7 @@ public class ClickerScreenModel
     public void SetMaxEnergy(int count)
     {
         _maxEnergy = count;
-        UpdateEnergyCount();
+        MaxEnergyChanged?.Invoke();
     }
 
     public void SetCurrentTime(int seconds)
@@ -66,7 +65,8 @@ public class ClickerScreenModel
 
     public void SetRechargeTime(int seconds)
     {
-        _rechargeTime = seconds;
+        if (seconds > 1)
+            _rechargeTime = seconds;
     }
 
     public int GetCoinsCount() => _coinsCount;

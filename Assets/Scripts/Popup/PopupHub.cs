@@ -5,15 +5,14 @@ using Zenject;
 public class PopupHub
 {
     [Inject] readonly BoostStorePopup.Factory _boostStorePopupFactory;
+    private EnergyBoost _energyBoost = new EnergyBoost();
+    private CoinsPerClickBoost _coinsPerClickBoost = new CoinsPerClickBoost();
+    private RechargeTimeBoost _rechargeTimeBoost = new RechargeTimeBoost();
 
     public class Factory : PlaceholderFactory<PopupHub> { }
 
     public void CreateBoostStorePopup()
     {
-        //Creator creator = new BoostStorePopupCreator();
-        //var prefab = Resources.Load<BoostStorePopup>(nameof(BoostStorePopup));
-        //_diContainer.InstantiatePrefab(prefab, Vector3.zero, Quaternion.identity, null);
-        //IPopup boostStorePopup = creator.FactoryMethod(Vector3.zero);
-        _boostStorePopupFactory.Create();
+        _boostStorePopupFactory.Create(_energyBoost, _coinsPerClickBoost, _rechargeTimeBoost);
     }
 }

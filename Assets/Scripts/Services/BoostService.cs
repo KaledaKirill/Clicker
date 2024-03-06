@@ -4,41 +4,53 @@ using Zenject;
 
 public class BoostService
 {
-    public event Action<int> CoinsPerClickChanged;
     public event Action<int> BalanceChanged;
-    public event Action<int> CostChanged;
+    public event Action<int> CoinsPerClickChanged;
+    public event Action<int> EnergyChanged;
+    public event Action<int> RechargeTimeChanged;
 
-    private int _coinsPerClick = 2;
-    private int _coinsPerClickMultiplier = 2;
-    private int _coinsPerClickCost = 50;
+
     private int _balance = 0;
-    private float _cost_multiplier = 1.5f;
-    [Inject] private BoostType _boostType;
-
-    public int GetCoinsPerClickCost => _coinsPerClickCost;
-
-    public int GetCoinsPerClick => _coinsPerClick;
-
-    public void SetCoinsPerClick(int value)
-    {
-        _coinsPerClick = value;
-    }
-
     public void SetBalance(int value)
     {
         _balance = value;
     }
 
-    public void BoostCoinsPerClick()
+    public void BuyBoost(IBoost boost)
     {
-        if (_balance >= _coinsPerClickCost)
+        if(boost.GetBoostCost() <= _balance)
         {
-            _coinsPerClick = _coinsPerClick * _coinsPerClickMultiplier;
-            CoinsPerClickChanged?.Invoke(_coinsPerClick);
-            _balance -= _coinsPerClickCost;
+            _balance -= boost.GetBoostCost();
             BalanceChanged?.Invoke(_balance);
-            _coinsPerClickCost = (int)(_coinsPerClickCost * _cost_multiplier);
-            CostChanged?.Invoke(_coinsPerClickCost);
+            boost.BuyBoost();
+        }
+
+        ChooseAction(boost);
+    }
+
+    public string GetDescription(IBoost boost)
+    {
+        return boost.GetBoostDescription();
+    }
+
+    public string GetBoostCostText(IBoost boost)
+    {
+        return boost.GetBoostCostText();
+    }
+
+    private void ChooseAction(IBoost boost)
+    {
+        if (boost is CoinsPerClickBoost)
+        {
+            CoinsPerClickChanged?.Invoke(boost.GetBoostValue());
+        }
+        else if (boost is EnergyBoost)
+        {
+            EnergyChanged?.Invoke(boost.GetBoostValue());
+        }
+        else if (boost is RechargeTimeBoost)
+        {
+            RechargeTimeChanged?.Invoke(boost.GetBoostValue());
         }
     }
 }

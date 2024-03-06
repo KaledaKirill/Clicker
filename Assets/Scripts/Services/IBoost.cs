@@ -4,4 +4,5 @@ public interface IBoost
     int GetBoostCost();
     int GetBoostValue();
     string GetBoostDescription();
+    public string GetBoostCostText();
 }

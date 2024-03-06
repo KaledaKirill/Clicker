@@ -259,14 +259,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideButton: {fileID: 2533538634159052030}
   coinsPerClickBuyButton: {fileID: 7785610044239511626}
-  EnergyBuyButton: {fileID: 5718426206546559281}
-  RechargeTimeBuyButton: {fileID: 324674196267685098}
+  energyBuyButton: {fileID: 5718426206546559281}
+  rechargeTimeBuyButton: {fileID: 324674196267685098}
   coinsPerClickDescriptionText: {fileID: 619529605500195144}
-  EnergyDescriptionText: {fileID: 8541600433453722368}
-  RechargeTimeDescriptionText: {fileID: 2034663768472701084}
+  energyDescriptionText: {fileID: 8541600433453722368}
+  rechargeTimeDescriptionText: {fileID: 1467851965091635255}
   coinsPerClickCostText: {fileID: 1131156067113359673}
-  EnergyCostText: {fileID: 8819060779148046235}
-  RechargeTimeCostText: {fileID: 2034663768472701084}
+  energyCostText: {fileID: 8819060779148046235}
+  rechargeTimeCostText: {fileID: 2034663768472701084}
 --- !u!1 &1762938348438867705
 GameObject:
   m_ObjectHideFlags: 0

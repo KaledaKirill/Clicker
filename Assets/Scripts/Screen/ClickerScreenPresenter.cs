@@ -33,6 +33,7 @@ public class ClickerScreenPresenter : IPresenter
         _clickerScreenModel.TimeIsOver += EnableRestartEnergyButton;
         _clickerScreenView.EnergyButtonClick += RestartEnergy;
         _clickerScreenView.StoreButtonClick += CreateBoostStorePopup;
+        _clickerScreenModel.MaxEnergyChanged += OnViewChanged;
     }
     public void Disable()
     {
@@ -58,6 +59,7 @@ public class ClickerScreenPresenter : IPresenter
         _clickerScreenView.SetScoreText(_clickerScreenModel.GetCoinsCount().ToString());
         _clickerScreenView.SetEnergyCountText(_clickerScreenModel.GetEnergyCount().ToString());
         _clickerScreenView.UpdateEnergySlider(_clickerScreenModel.GetEnergyCount());
+        _clickerScreenView.SetEnergySliderMaxValue(_clickerScreenModel.GetMaxEnergyCount());
     }
 
     private void DisableCoin()
